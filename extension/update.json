@@ -5,10 +5,14 @@
         {
           "version": "1.0.0"
         , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.0.0.xpi"
-        },
-        {
+        }
+      , {
           "version": "1.0.1"
         , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.0.1.xpi"
+        }
+      , {
+          "version": "1.1.1"
+        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.1.1.xpi"
         }
       ]
     }

@@ -1,0 +1,20 @@
+﻿{
+	"manifest_version": 3
+,	"short_name": "boxdrive-ext"
+,	"name": "BoxDrive Support Extension"
+,	"version": "1.1.1"
+,	"description": "Box(web)でBoxDriveのパスをコピー、開く、boxショートカットの作成などをサポートします"
+,	"options_page": "option.html"
+,	"content_scripts": [{
+		"matches": ["https://*.box.com/f*/*", "https://*.box.com/collection/*", "http://localhost/*"]
+	,	"js": ["content.js"]
+	,	"css": ["style.css"]
+	}]
+,	"background": {
+		"service_worker": "background.js"
+	,	"type": "module"
+	}
+,	"permissions": [
+		"tabs"
+	]
+}

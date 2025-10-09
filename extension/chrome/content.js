@@ -208,9 +208,9 @@ function clickmain(ptarget, callback)
         {
             //  クリップボードにコピー（Openerなし版）
             let path = "";
-            if ([...document.querySelectorAll(".ItemListBreadcrumb-listItem")].map((v) => v.innerText).filter((v) => v !== "" && v == "すべてのファイル") == "すべてのファイル")
+            if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/0"') === true)
             {
-                //  すべてのファイルで始まっている
+                //  先頭ファイルから始まっている
                 dbgPutlog(3, "boxfolder", "folder/0");
             }
             else
@@ -222,7 +222,7 @@ function clickmain(ptarget, callback)
                     let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
                     if (dotButton2)
                     {
-                        path += [ ...document.querySelectorAll("a[data-resin-target='openfolder'].menu-item"), ].map((e) => e.innerText).filter((v) => v !== "すべてのファイル").join("/");
+                        path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => v.innerHTML.includes('"/folder/0"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/")
                         if (!path.endsWith("/")) path += "/";
                         dotButton.click();
                     }
@@ -590,7 +590,7 @@ function boxfolder(pid, ppath, pautoopen)
 
         dbgPutlogBoxDrive(2, "ppath", ppath);
         let pathLast = "";
-        pathLast += [...document.querySelectorAll(".ItemListBreadcrumb-listItem")].map((v) => v.innerText).filter((v) => v !== "" && v !== "すべてのファイル").join("/");
+        pathLast += [...document.querySelectorAll(".ItemListBreadcrumb-listItem")].filter((v) => v.innerHTML.includes('"/folder/0"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/");
         dbgPutlogBoxDrive(2, "pathLast", pathLast);
         if ((mode_opener !== true) || (ppath !== "") && (ppath.startsWith("%") !== true) && (ppath.endsWith("/" + pathLast) === true))
         {
@@ -841,9 +841,9 @@ function boxfolder(pid, ppath, pautoopen)
         }
 
         let path = "";
-        if ([...document.querySelectorAll(".ItemListBreadcrumb-listItem")].map((v) => v.innerText).filter((v) => v !== "" && v == "すべてのファイル") == "すべてのファイル")
+        if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/0"') === true)
         {
-            //  すべてのファイルで始まっている
+            //  先頭ファイルから始まっている
             dbgPutlogBoxDrive(3, "boxfolder", "folder/0");
         }
         else
@@ -855,7 +855,7 @@ function boxfolder(pid, ppath, pautoopen)
                 let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
                 if (dotButton2)
                 {
-                    path += [ ...document.querySelectorAll("a[data-resin-target='openfolder'].menu-item"), ].map((e) => e.innerText).filter((v) => v !== "すべてのファイル").join("/");
+                    path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => v.innerHTML.includes('"/folder/0"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/")
                     if (!path.endsWith("/")) path += "/";
                     dotButton.click();
                 }

@@ -2,7 +2,7 @@
 	"manifest_version": 3
 ,	"short_name": "boxdrive-ext"
 ,	"name": "BoxDrive Support Extension"
-,	"version": "1.2.1"
+,	"version": "1.2.2"
 ,	"description": "Box(web)でBoxDriveのパスをコピー、開く、boxショートカットの作成などをサポートします"
 ,	"options_page": "option.html"
 ,	"content_scripts": [{

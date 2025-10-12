@@ -590,9 +590,16 @@ function boxfolder(pid, ppath, pautoopen)
 
         dbgPutlogBoxDrive(2, "ppath", ppath);
         let pathLast = "";
-        pathLast += [...document.querySelectorAll(".ItemListBreadcrumb-listItem")].filter((v) => v.innerHTML.includes('"/folder/0"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/");
+        if (String(window.location).endsWith("/folder/0") === true)
+        {
+            pathLast = "/";
+        }
+        else
+        {
+            pathLast += [...document.querySelectorAll(".ItemListBreadcrumb-listItem")].filter((v) => v.innerHTML.includes('"/folder/0"') !== true && v.innerHTML.includes('"foldertree"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/");
+        }
         dbgPutlogBoxDrive(2, "pathLast", pathLast);
-        if ((mode_opener !== true) || (ppath !== "") && (ppath.startsWith("%") !== true) && (ppath.endsWith("/" + pathLast) === true))
+        if ((mode_opener !== true) || (ppath === pathLast) || (ppath !== "") && (ppath.startsWith("%") !== true) && (ppath.endsWith("/" + pathLast) === true))
         {
             //  getfolderで取得でき、末尾が表示しているページのフォルダ内容と一致
             if (pautoopen === false)
@@ -890,7 +897,7 @@ function boxfolder(pid, ppath, pautoopen)
                 if (path.startsWith("/") === false) path = "/" + path;
                 //path = "%USERPROFILE%/Box" + path;
             }
-            if (path !== "/")
+            //if (path !== "/")
             {
                 dbgPutlogBoxDrive(3, "boxfolder", "saveBoxDrive," + wid + "," + path);
                 chrome.runtime.sendMessage(

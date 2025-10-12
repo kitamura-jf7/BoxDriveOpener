@@ -6,3 +6,13 @@ BoxDriveOpener.exeの初回起動時に.boxlnkの拡張子関連付け登録を�
 
 
 以後、BoxDriveOpener.exeが更新されていた場合は、手動で置き換えてください 
+
+
+edge用拡張機能
+https://microsoftedge.microsoft.com/addons/detail/boxdrive-support-extensio/jhjmmhmpmeenkleggomcdempfkajlckk
+
+chrome/edge用拡張機能
+extension/chromeフォルダ
+
+firefox用拡張機能
+extension/b987739d8dd046be9c74-X.X.X.xpi

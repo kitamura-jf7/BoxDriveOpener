@@ -15,4 +15,4 @@ chrome/edge用拡張機能
 extension/chromeフォルダ
 
 firefox用拡張機能
-extension/b987739d8dd046be9c74-X.X.X.xpi
+https://addons.mozilla.org/en-US/firefox/addon/boxdrive-support-extension/

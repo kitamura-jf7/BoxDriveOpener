@@ -1330,22 +1330,22 @@ function boxfile(pid, ppath, pautoopen)
             return "same";
         }
 
-        if (pautoopen === false)
-        {
-            dbgPutlogBoxDrive(3, "boxfile", "saveBoxDrive," + wid + "," + wpath);
-            chrome.runtime.sendMessage(
-            {
-                message: "saveBoxDrive"
-            ,   Id: wid
-            ,   Path: wpath
-            })
-            .then((response) => 
-            {
-            })
-            ;
-            return "save";
-        }
-        else
+//          if (pautoopen === false)
+//          {
+//              dbgPutlogBoxDrive(3, "boxfile", "saveBoxDrive," + wid + "," + wpath);
+//              chrome.runtime.sendMessage(
+//              {
+//                  message: "saveBoxDrive"
+//              ,   Id: wid
+//              ,   Path: wpath
+//              })
+//              .then((response) => 
+//              {
+//              })
+//              ;
+//              return "save";
+//          }
+//          else
         {
             //  親フォルダを取得
             dbgPutlogBoxDrive(3, "boxfile", "getBoxDrive," + wfolderid + "," + wurl);

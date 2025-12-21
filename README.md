@@ -16,3 +16,7 @@ extension/chromeフォルダ
 
 firefox用拡張機能
 https://addons.mozilla.org/en-US/firefox/addon/boxdrive-support-extension/
+
+
+-- 2025/12/21 --
+初回起動時の.boxlnkの拡張子関連付け登録が失敗していたのを修正

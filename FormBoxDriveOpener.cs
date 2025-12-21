@@ -568,27 +568,33 @@ namespace BoxDriveOpener
             || (Environment.GetCommandLineArgs().Length == 2) && (Environment.GetCommandLineArgs()[1] == @"/reg"))
             {
                 //  拡張子関連付け（要、管理者権限）
+                //this.LOG.PutLog1("test", string.Format("{0}", "A010"));
                 try
                 {
                     regKey = Registry.ClassesRoot.OpenSubKey(@".boxlnk");
                     if (regKey == null)
                     {
-                        regKey.Close();
+                        //this.LOG.PutLog1("test", string.Format("{0}", "A020"));
                         regKey = Registry.ClassesRoot.CreateSubKey(@".boxlnk");
                         regKey.SetValue(@"", @"BoxDriveOpener");
                     }
                     regKey.Close();
+                    //this.LOG.PutLog1("test", string.Format("{0}", "A030"));
                     regKey = Registry.ClassesRoot.OpenSubKey(@"BoxDriveOpener");
                     if (regKey == null)
                     {
-                        regKey.Close();
+                        //this.LOG.PutLog1("test", string.Format("{0}", "A040"));
                         regKey = Registry.ClassesRoot.CreateSubKey(@"BoxDriveOpener\shell\OPEN");
                         regKey.SetValue(@"EditFlags", new byte[] { 1, 0, 0, 0 });
                         regKey.Close();
                         regKey = Registry.ClassesRoot.CreateSubKey(@"BoxDriveOpener\shell\OPEN\command");
                         regKey.SetValue(@"", "dummy");
+                        regKey.Close();
+                        regKey = Registry.ClassesRoot.CreateSubKey(@"BoxDriveOpener\DefaultIcon");
+                        regKey.SetValue(@"", "dummy");
                     }
                     regKey.Close();
+                    //this.LOG.PutLog1("test", string.Format("{0}", "A050"));
                     regKey = Registry.ClassesRoot.OpenSubKey(@"BoxDriveOpener\shell\OPEN\command");
                     if (regKey.GetValue(@"").ToString() != @"""" + Application.ExecutablePath + @""" ""%1"" ""%2"" ""%3"" ""%4"" ""%5"" ""%6"" ""%7"" ""%8"" ""%9""")
                     {
@@ -601,6 +607,7 @@ namespace BoxDriveOpener
                         regKey.SetValue(@"", @"""" + Application.ExecutablePath + @""",1");
                     }
                     regKey.Close();
+                    //this.LOG.PutLog1("test", string.Format("{0}", "A060"));
                     if ((Environment.GetCommandLineArgs().Length == 2) && (Environment.GetCommandLineArgs()[1] == @"/reg"))
                     {
                         this.INI.Write("Reg", "Do", "OK");
@@ -608,6 +615,7 @@ namespace BoxDriveOpener
                         Application.Exit();
                         return;
                     }
+                    //this.LOG.PutLog1("test", string.Format("{0}", "A090"));
                 }
                 catch (Exception ex)
                 {

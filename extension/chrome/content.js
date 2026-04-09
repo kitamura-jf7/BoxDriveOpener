@@ -216,14 +216,25 @@ function clickmain(ptarget, callback)
             else
             {
                 //  フォルダ階層取得
-                const dotButton = document.querySelectorAll(".ItemListBreadcrumb > button")[0];
+                let dotButton = document.querySelectorAll(".ItemListBreadcrumb > button")[0];
+                if (dotButton)
+                {
+                }
+                else
+                {
+                    dotButton = document.querySelectorAll(".ItemListBreadcrumb")[0];
+                    if (dotButton)
+                    {
+                        dotButton = dotButton.querySelectorAll("button")[0];
+                    }
+                }
                 if (dotButton)
                 {
                     let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
                     if (dotButton2)
                     {
-                        path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => v.innerHTML.includes('"/folder/0"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/")
-                        if (!path.endsWith("/")) path += "/";
+                        path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
+                        if (path.endsWith("/") === false) path += "/";
                         dotButton.click();
                     }
                     else
@@ -596,7 +607,11 @@ function boxfolder(pid, ppath, pautoopen)
         }
         else
         {
-            pathLast += [...document.querySelectorAll(".ItemListBreadcrumb-listItem")].filter((v) => v.innerHTML.includes('"/folder/0"') !== true && v.innerHTML.includes('"foldertree"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/");
+            let tmpelm = document.querySelectorAll('ol[data-testid="item-list-breadcrumb-list"]');
+            if (tmpelm.length === 1)
+            {
+                pathLast += [...tmpelm[0].querySelectorAll(".ItemListBreadcrumb-listItem")].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true) && (v.innerHTML.includes('"foldertree"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/");
+            }
         }
         dbgPutlogBoxDrive(2, "pathLast", pathLast);
         if ((mode_opener !== true) || (ppath === pathLast) || (ppath !== "") && (ppath.startsWith("%") !== true) && (ppath.endsWith("/" + pathLast) === true))
@@ -848,6 +863,12 @@ function boxfolder(pid, ppath, pautoopen)
         }
 
         let path = "";
+        if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/') !== true)
+        {
+            //  先頭ファイルのみ
+            dbgPutlogBoxDrive(3, "boxfolder", "folder/0");
+        }
+        else
         if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/0"') === true)
         {
             //  先頭ファイルから始まっている
@@ -856,13 +877,24 @@ function boxfolder(pid, ppath, pautoopen)
         else
         {
             //  フォルダ階層取得
-            const dotButton = document.querySelectorAll(".ItemListBreadcrumb > button")[0];
+            let dotButton = document.querySelectorAll(".ItemListBreadcrumb > button")[0];
+            if (dotButton)
+            {
+            }
+            else
+            {
+                dotButton = document.querySelectorAll(".ItemListBreadcrumb")[0];
+                if (dotButton)
+                {
+                    dotButton = dotButton.querySelectorAll("button")[0];
+                }
+            }
             if (dotButton)
             {
                 let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
                 if (dotButton2)
                 {
-                    path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => v.innerHTML.includes('"/folder/0"') !== true).map((v) => v.innerText).filter((v) => v !== "").join("/")
+                    path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
                     if (!path.endsWith("/")) path += "/";
                     dotButton.click();
                 }
@@ -921,9 +953,9 @@ function boxfolder(pid, ppath, pautoopen)
 
 function reposDummyFile()
 {
-    let tmpelm = document.querySelector(".breadcrumb-item-last").querySelector(".XXBoxDriveDummy");
-    let tmpbaserect = document.querySelector(".preview-header").getBoundingClientRect();
-    let tmprect = document.querySelector(".preview-header").querySelector(".parent-name").getBoundingClientRect();
+    let tmpelm = document.querySelector(".PreviewHeaderSubtitle").querySelector(".XXBoxDriveDummy");
+    let tmpbaserect = document.querySelector("[data-testid='preview-header']").getBoundingClientRect();
+    let tmprect = document.querySelector("[data-testid='preview-header']").querySelector(".PreviewHeaderSubtitle-breadcrumb").getBoundingClientRect();
     tmpelm.style.left = (
         tmprect.left
         - tmpbaserect.left
@@ -1011,7 +1043,7 @@ function boxfile(pid, ppath, pautoopen)
                 return "skip";
             }
 
-            parentelm = document.querySelector(".breadcrumb-item-last");    //  .item-name  .preview-header-title-section
+            parentelm = document.querySelector(".PreviewHeaderSubtitle");    //  .item-name  .preview-header-title-section
             if (parentelm === null)
             {
                 dbgPutlogBoxDrive(3, "boxfile0b", "skip");
@@ -1029,7 +1061,7 @@ function boxfile(pid, ppath, pautoopen)
                 tmpelm.style.backgroundColor = BG_NA_COLOR;
                 tmpelm.style.zIndex = 2147483647;
                 tmpelm.setAttribute("xxbdpid", "xx"); //  後でセット
-                parentelm.insertBefore(tmpelm, parentelm.querySelector(".parent-section"));
+                parentelm.insertBefore(tmpelm, parentelm.querySelector(".PreviewHeaderSubtitle-breadcrumb"));
                 window.addEventListener("resize", (event) =>
                 {
                     reposDummyFile();
@@ -1050,14 +1082,14 @@ function boxfile(pid, ppath, pautoopen)
             }
         }
 
-        var wurl = String(document.querySelector("a.parent-name").href);
+        var wurl = String(document.querySelector("a[data-testid='parent-foldername-link']").href);
         if (wurl.match(/https:[/][/].*[.]box[.]com[/]folder[/][0-9a-zA-Z]*.*/) === null)   //  box folder
         {
             dbgPutlogBoxDrive(3, "boxfile0d", "diff");
             return "diff";
         }
         var wfolderid = wurl.replace(/http.*[/]folder[/]([0-9a-zA-Z]*).*/, "$1");
-        var file = document.querySelector(".preview-header-title-section > .item-name").textContent;
+        var file = document.querySelector(".PreviewHeaderTitle > h1").textContent;
         dbgPutlogBoxDrive(3, "boxfile", "folderid+file=" + "%" + wfolderid + "%/" + file);
         if (count_retry < 5)    //  約10秒間
         {

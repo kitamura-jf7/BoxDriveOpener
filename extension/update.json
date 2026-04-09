@@ -1,26 +1,10 @@
 ﻿{
   "addons": {
-    "{24e43e71-48de-4a6c-a55a-4242f1de3950}": {
+    "{boxdrive-extension@nv44}": {
       "updates": [
         {
-          "version": "1.0.0"
-        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.0.0.xpi"
-        }
-      , {
-          "version": "1.0.1"
-        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.0.1.xpi"
-        }
-      , {
-          "version": "1.1.1"
-        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.1.1.xpi"
-        }
-      , {
-          "version": "1.2.1"
-        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.2.1.xpi"
-        }
-      , {
-          "version": "1.2.2"
-        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/b987739d8dd046be9c74-1.2.2.xpi"
+          "version": "1.4.9"
+        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/00ccb0cbde5141518362-1.4.9.xpi"
         }
       ]
     }

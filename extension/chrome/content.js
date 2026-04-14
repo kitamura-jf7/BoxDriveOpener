@@ -863,12 +863,6 @@ function boxfolder(pid, ppath, pautoopen)
         }
 
         let path = "";
-        if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/') !== true)
-        {
-            //  先頭ファイルのみ
-            dbgPutlogBoxDrive(3, "boxfolder", "folder/0");
-        }
-        else
         if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/0"') === true)
         {
             //  先頭ファイルから始まっている
@@ -916,6 +910,14 @@ function boxfolder(pid, ppath, pautoopen)
                     })
                     ;
                     return "openfolder";
+                }
+            }
+            else
+            {
+                if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].textContent === "ファイル")
+                {
+                    //  先頭ファイルのみ
+                    dbgPutlogBoxDrive(3, "boxfolder", "folder/0");
                 }
             }
         }

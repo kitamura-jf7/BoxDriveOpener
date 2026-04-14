@@ -2,7 +2,7 @@
 	"manifest_version": 3
 ,	"short_name": "boxdrive-ext"
 ,	"name": "BoxDrive Support Extension"
-,	"version": "1.4.9"
+,	"version": "1.4.10"
 ,	"icons": {
 		"16": "icon16.png"
 	,	"48": "icon48.png"

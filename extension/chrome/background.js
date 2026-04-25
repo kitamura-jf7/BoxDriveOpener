@@ -237,13 +237,13 @@ async function dogetBoxDrive(pid, purl, callback)
                     else
                     {
                         proccnt++;
-                        if (proccnt < 3)
+                        if (proccnt < 10)
                         {
                             setTimeout(function()
                             {
                                 proconclose(proccnt);
                             }
-                            , 5000);
+                            , 1000);
                         }
                     }
                 })

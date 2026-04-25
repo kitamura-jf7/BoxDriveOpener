@@ -233,9 +233,38 @@ function clickmain(ptarget, callback)
                     let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
                     if (dotButton2)
                     {
-                        path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
-                        if (path.endsWith("/") === false) path += "/";
-                        dotButton.click();
+                        path += [ ...document.querySelectorAll(".bdl-DropdownMenu-element li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
+                        if (dotButton.getAttribute("xxclick") === path+"//")
+                        {
+                            if (path.endsWith("/") === false) path += "/";
+                            dotButton.click();
+                            dotButton.removeAttribute("xxclick");
+                        }
+                        else
+                        {
+                            if (dotButton.getAttribute("xxclick") === path)
+                            {
+                                dotButton.setAttribute("xxclick", path+"//");   //  もう１回
+                            }
+                            else
+                            {
+                                dotButton.setAttribute("xxclick", path);
+                            }
+                            chrome.runtime.sendMessage(
+                            {
+                                message: "waittimer"
+                            ,   Interval: 100
+                            })
+                            .then((response2) =>
+                            {
+                                if (response2.Res === "ok")
+                                {
+                                    clickmain(ptarget, callback);   //  再帰
+                                }
+                            })
+                            ;
+                            return "click";
+                        }
                     }
                     else
                     {
@@ -244,7 +273,7 @@ function clickmain(ptarget, callback)
                         chrome.runtime.sendMessage(
                         {
                             message: "waittimer"
-                        ,   Interval: 300
+                        ,   Interval: 100
                         })
                         .then((response2) =>
                         {
@@ -885,12 +914,45 @@ function boxfolder(pid, ppath, pautoopen)
             }
             if (dotButton)
             {
+                if (dotButton.hasAttribute("xxclick") !== true)
+                {
+                    dotButton.setAttribute("xxclick", "///");
+                }
                 let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
                 if (dotButton2)
                 {
-                    path += [ ...document.querySelectorAll("li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
-                    if (!path.endsWith("/")) path += "/";
-                    dotButton.click();
+                    path += [ ...document.querySelectorAll(".bdl-DropdownMenu-element li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
+                    if (dotButton.getAttribute("xxclick") === path+"//")
+                    {
+                        if (path.endsWith("/") === false) path += "/";
+                        dotButton.click();
+                        dotButton.removeAttribute("xxclick");
+                    }
+                    else
+                    {
+                        if (dotButton.getAttribute("xxclick") === path)
+                        {
+                            dotButton.setAttribute("xxclick", path+"//");   //  もう１回
+                        }
+                        else
+                        {
+                            dotButton.setAttribute("xxclick", path);
+                        }
+                        chrome.runtime.sendMessage(
+                        {
+                            message: "waittimer"
+                        ,   Interval: 100
+                        })
+                        .then((response2) =>
+                        {
+                            if (response2.Res === "ok")
+                            {
+                                boxfolder(pid, ppath, pautoopen);   //  再帰
+                            }
+                        })
+                        ;
+                        return "openfolder";
+                    }
                 }
                 else
                 {
@@ -899,7 +961,7 @@ function boxfolder(pid, ppath, pautoopen)
                     chrome.runtime.sendMessage(
                     {
                         message: "waittimer"
-                    ,   Interval: 300
+                    ,   Interval: 100
                     })
                     .then((response2) =>
                     {

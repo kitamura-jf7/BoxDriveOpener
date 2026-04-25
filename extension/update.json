@@ -3,10 +3,6 @@
     "{boxdrive-extension@nv44}": {
       "updates": [
         {
-          "version": "1.4.9"
-        , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/00ccb0cbde5141518362-1.4.9.xpi"
-        }
-      , {
           "version": "1.4.11"
         , "update_link": "https://github.com/kitamura-jf7/BoxDriveOpener/raw/refs/heads/main/extension/00ccb0cbde5141518362-1.4.11.xpi"
         }

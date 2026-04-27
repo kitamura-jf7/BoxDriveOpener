@@ -1,6 +1,6 @@
 ﻿{
   "addons": {
-    "{boxdrive-extension@nv44}": {
+    "boxdrive-extension@nv44": {
       "updates": [
         {
           "version": "1.4.11"

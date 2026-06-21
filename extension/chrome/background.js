@@ -46,7 +46,7 @@ function dbgPutlog(lv, evt, msg)
 }
 
 var intervaldef = 2000;
-var intervalshort = 300;
+var intervalshort = 600;
 var interval = 0;
 
 var localUrl = "http://localhost:{port}/";

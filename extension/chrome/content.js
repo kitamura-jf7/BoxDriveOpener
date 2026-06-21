@@ -26,6 +26,7 @@ var dbg =
     0;
     dbg = 1;
 //    dbg = 2;
+//    dbg = 3;
 function dbgPutlog(lv, evt, msg)
 {
     if (dbg >= lv)
@@ -99,6 +100,75 @@ var mode_opener = false;
 var mode_boxlink = null;
 var mode_slidebar_folder = false;   //  初期状態で、true=開く、false=閉じる
 var mode_slidebar_file = true;      //  初期状態で、true=開く、false=閉じる
+
+var optionLoadingPromise = null;
+async function loadBoxOptions()
+{
+    if (mode_boxlink !== null)
+    {
+        return;
+    }
+
+    // すでに取得中なら同じPromiseを待つ
+    if (optionLoadingPromise === null)
+    {
+        dbgPutlogBoxDrive(3, "loadBoxOptions", "checkOption");
+        optionLoadingPromise = chrome.runtime.sendMessage(
+        {
+            message: "checkOption"
+        })
+        .then((response) =>
+        {
+            if (response.Res.startsWith("ok,") === true)
+            {
+                if (response.Res.indexOf(",makelink,") !== -1)
+                {
+                    varelem.setAttribute("xxbdboxlink", "true");
+                    mode_boxlink = true;
+                }
+                else
+                {
+                    varelem.setAttribute("xxbdboxlink", "false");
+                    mode_boxlink = false;
+                }
+                if (response.Res.indexOf(",closefoldersidebar,") !== -1)
+                {
+                    varelem.setAttribute("xxbdslidebarfolder", "false");
+                    mode_slidebar_folder = false;   //  隠す
+                }
+                else
+                {
+                    varelem.setAttribute("xxbdslidebarfolder", "true");
+                    mode_slidebar_folder = true;    //  隠さない
+                }
+                if (response.Res.indexOf(",closefilesidebar,") !== -1)
+                {
+                    varelem.setAttribute("xxbdslidebarfile", "false");
+                    mode_slidebar_file = false;   //  隠す
+                }
+                else
+                {
+                    varelem.setAttribute("xxbdslidebarfile", "true");
+                    mode_slidebar_file = true;    //  隠さない
+                }
+                dbgPutlogBoxDrive(3, "loadBoxOptions", "checkOption," + mode_boxlink + "," + mode_slidebar_file);
+                chrome.runtime.sendMessage(
+                {
+                    message: "waittimer"
+                ,   Interval: 10
+                })
+                ;
+            }
+        })
+        .finally(() =>
+        {
+            optionLoadingPromise = null;
+        })
+        ;
+    }
+    await optionLoadingPromise;
+}
+
 
 const BG_NA_COLOR = "#fffff0";
 const BG_A_COLOR = BG_NA_COLOR;
@@ -498,7 +568,7 @@ function reposDummyFolder()
         ).toString() + "px";
 }
 
-function boxfolder(pid, ppath, pautoopen)
+async function boxfolder(pid, ppath, pautoopen)
 {
     try
     {
@@ -520,56 +590,7 @@ function boxfolder(pid, ppath, pautoopen)
         let parentelm = null;
         if (pautoopen === false)
         {
-            if (mode_boxlink === null)
-            {
-                dbgPutlogBoxDrive(3, "boxfolder", "checkOption");
-                chrome.runtime.sendMessage(
-                {
-                    message: "checkOption"
-                })
-                .then((response) =>
-                {
-                    if (response.Res.startsWith("ok,") === true)
-                    {
-                        if (response.Res.indexOf(",makelink,") !== -1)
-                        {
-                            varelem.setAttribute("xxbdboxlink", "true");
-                            mode_boxlink = true;
-                        }
-                        else
-                        {
-                            varelem.setAttribute("xxbdboxlink", "false");
-                            mode_boxlink = false;
-                        }
-                        if (response.Res.indexOf(",closefoldersidebar,") !== -1)
-                        {
-                            varelem.setAttribute("xxbdslidebarfolder", "false");
-                            mode_slidebar_folder = false;   //  隠す
-                        }
-                        else
-                        {
-                            varelem.setAttribute("xxbdslidebarfolder", "true");
-                            mode_slidebar_folder = true;    //  隠さない
-                        }
-                        dbgPutlogBoxDrive(3, "boxfolder", "checkOption," + mode_boxlink + "," + mode_slidebar_folder);
-                        chrome.runtime.sendMessage(
-                        {
-                            message: "waittimer"
-                        ,   Interval: 10
-                        })
-                        .then((response2) =>
-                        {
-                            if (response2.Res === "ok")
-                            {
-                                return boxfolder(pid, ppath, pautoopen);    //  再帰
-                            }
-                        })
-                        ;
-                    }
-                });
-                dbgPutlogBoxDrive(3, "boxfolder0d", "skip");
-                return "skip";
-            }
+            await loadBoxOptions();
 
             parentelm = document.querySelector(".action-bar-title");
             if (parentelm === null)
@@ -1007,6 +1028,7 @@ function boxfolder(pid, ppath, pautoopen)
         }
         else
         {
+            return "fin";
         }
     }
     finally
@@ -1033,8 +1055,9 @@ function reposDummyFile()
         ).toString() + "px";
 }
 
+
 var count_retry = 0;
-function boxfile(pid, ppath, pautoopen)
+async function boxfile(pid, ppath, pautoopen)
 {
     try
     {
@@ -1056,61 +1079,18 @@ function boxfile(pid, ppath, pautoopen)
         var parentelm = null;
         if (pautoopen === false)
         {
-            if (mode_boxlink === null)
-            {
-                dbgPutlogBoxDrive(3, "boxfile", "checkOption");
-                chrome.runtime.sendMessage(
-                {
-                    message: "checkOption"
-                })
-                .then((response) =>
-                {
-                    if (response.Res.startsWith("ok,") === true)
-                    {
-                        if (response.Res.indexOf(",makelink,") !== -1)
-                        {
-                            varelem.setAttribute("xxbdboxlink", "true");
-                            mode_boxlink = true;
-                        }
-                        else
-                        {
-                            varelem.setAttribute("xxbdboxlink", "false");
-                            mode_boxlink = false;
-                        }
-                        if (response.Res.indexOf(",closefilesidebar,") !== -1)
-                        {
-                            varelem.setAttribute("xxbdslidebarfile", "false");
-                            mode_slidebar_file = false;   //  隠す
-                        }
-                        else
-                        {
-                            varelem.setAttribute("xxbdslidebarfile", "true");
-                            mode_slidebar_file = true;    //  隠さない
-                        }
-                        dbgPutlogBoxDrive(3, "boxfile", "checkOption," + mode_boxlink + "," + mode_slidebar_file);
-                        chrome.runtime.sendMessage(
-                        {
-                            message: "waittimer"
-                        ,   Interval: 10
-                        })
-                        .then((response2) =>
-                        {
-                            if (response2.Res === "ok")
-                            {
-                                return boxfile(pid, ppath, pautoopen);    //  再帰
-                            }
-                        })
-                        ;
-                    }
-                });
-                dbgPutlogBoxDrive(3, "boxfile0e", "skip");
-                return "skip";
-            }
+            await loadBoxOptions();
 
+            parentelm = document.querySelector(".PreviewHeaderSubtitle-breadcrumb");
+            if (parentelm === null)
+            {
+                dbgPutlogBoxDrive(3, "boxfile0b1", "skip");
+                return "skip";  //  追加先のエレメントが未だ存在しない→skip
+            }
             parentelm = document.querySelector(".PreviewHeaderSubtitle");    //  .item-name  .preview-header-title-section
             if (parentelm === null)
             {
-                dbgPutlogBoxDrive(3, "boxfile0b", "skip");
+                dbgPutlogBoxDrive(3, "boxfile0b2", "skip");
                 return "skip";  //  追加先のエレメントが未だ存在しない→skip
             }
 
@@ -1130,6 +1110,7 @@ function boxfile(pid, ppath, pautoopen)
                 {
                     reposDummyFile();
                 });
+                reposDummyFile();
                 dbgPutlogBoxDrive(3, "boxfile", "XXBoxDriveDummy作成");
             }
             setbody("XXBDViewFile", document.querySelector(".Body"));
@@ -1187,7 +1168,7 @@ function boxfile(pid, ppath, pautoopen)
         }
         else
         {
-            //  ファイル名が変わった!?
+            //  ファイル名が変わった!? or boxdriveへの同期が未だ
             //window.location.reload();   //  ★
             //return "reload";
             ppath = ">lost<";
@@ -1334,12 +1315,17 @@ function boxfile(pid, ppath, pautoopen)
                 }
                 else
                 {
+                    try
                     {
                         tmpelm = document.querySelector(".bp-content").querySelector(".XXBoxDriveContent");
                         if (tmpelm !== null)
                         {
                             tmpelm.remove();
                         }
+                    }
+                    catch {}
+                    try
+                    {
                         tmpelm = elmxxbd.querySelector(".XXBoxDriveDummy1").querySelector(".XXBoxDriveOpenLinkBrowser");
                         if (tmpelm !== null)
                         {
@@ -1351,6 +1337,7 @@ function boxfile(pid, ppath, pautoopen)
                             tmpelm.remove();
                         }
                     }
+                    catch {}
                     if (mode_boxlink === true)
                     {
                         //  ショートカットの作成
@@ -1473,6 +1460,7 @@ function boxfile(pid, ppath, pautoopen)
                     ;
                 }
             });
+            return "fin";
         }
     }
     finally
@@ -1481,7 +1469,7 @@ function boxfile(pid, ppath, pautoopen)
     }
 }
 
-function boxcollection()
+async function boxcollection()
 {
 //      try
 //      {
@@ -1756,9 +1744,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
             }
         })
         ;
-        var res = boxfolder(request.Id, request.Path, request.AutoOpen);
-        dbgPutlogBoxDrive(3, request.method, "900, " + res);
-        sendResponse({Res: res});
+        boxfolder(request.Id, request.Path, request.AutoOpen)
+        .then((res) =>
+        {
+            dbgPutlogBoxDrive(3, request.method, "900, " + res);
+            sendResponse({Res: res});
+        })
+        ;
+        return true;
     }
     else
     if (request.method === "getBoxFile")
@@ -1775,9 +1768,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
             dbgPutlogBoxDrive(1, "DebugLevel", dbg);
         })
         ;
-        var res = boxfile(request.Id, request.Path, request.AutoOpen);
-        dbgPutlogBoxDrive(3, request.method, "900, " + res);
-        sendResponse({Res: res});
+        boxfile(request.Id, request.Path, request.AutoOpen)
+        .then((res) =>
+        {
+            dbgPutlogBoxDrive(3, request.method, "900, " + res);
+            sendResponse({Res: res});
+        })
+        ;
+        return true;
     }
     else
     if (request.method === "getBoxCollection")
@@ -1794,9 +1792,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
             dbgPutlogBoxDrive(1, "DebugLevel", dbg);
         })
         ;
-        var res = boxcollection();
-        dbgPutlogBoxDrive(3, request.method, "900, " + res);
-        sendResponse({Res: res});
+        boxcollection()
+        .then((res) =>
+        {
+            dbgPutlogBoxDrive(3, request.method, "900, " + res);
+            sendResponse({Res: res});
+        })
+        ;
+        return true;
     }
     else
     {

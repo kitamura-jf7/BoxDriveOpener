@@ -35,7 +35,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>BoxDriveOpener32.ico</ApplicationIcon>
+    <ApplicationIcon>BoxDriveOpener.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiteDB, Version=5.0.21.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
@@ -100,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BoxDriveOpener.ico" />
-    <Content Include="BoxDriveOpener32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

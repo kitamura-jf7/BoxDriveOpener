@@ -47,10 +47,11 @@
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(800, 88);
+            this.textBox1.Size = new System.Drawing.Size(480, 60);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "1\r\n2\r\n3\r\n4\r\n5";
             // 
@@ -63,11 +64,12 @@
             // textBox2
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(0, 88);
+            this.textBox2.Location = new System.Drawing.Point(0, 60);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox2.Size = new System.Drawing.Size(800, 362);
+            this.textBox2.Size = new System.Drawing.Size(480, 240);
             this.textBox2.TabIndex = 1;
             this.textBox2.Text = "1\r\n2\r\n3\r\n4\r\n5";
             // 
@@ -76,9 +78,10 @@
             this.LBL_PopupColor.AutoSize = true;
             this.LBL_PopupColor.BackColor = System.Drawing.SystemColors.Info;
             this.LBL_PopupColor.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.LBL_PopupColor.Location = new System.Drawing.Point(540, 9);
+            this.LBL_PopupColor.Location = new System.Drawing.Point(324, 6);
+            this.LBL_PopupColor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LBL_PopupColor.Name = "LBL_PopupColor";
-            this.LBL_PopupColor.Size = new System.Drawing.Size(52, 18);
+            this.LBL_PopupColor.Size = new System.Drawing.Size(35, 12);
             this.LBL_PopupColor.TabIndex = 2;
             this.LBL_PopupColor.Text = "label1";
             this.LBL_PopupColor.Visible = false;
@@ -88,9 +91,10 @@
             this.LBL_ExecPopup.AutoSize = true;
             this.LBL_ExecPopup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.LBL_ExecPopup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LBL_ExecPopup.Location = new System.Drawing.Point(540, 27);
+            this.LBL_ExecPopup.Location = new System.Drawing.Point(324, 18);
+            this.LBL_ExecPopup.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LBL_ExecPopup.Name = "LBL_ExecPopup";
-            this.LBL_ExecPopup.Size = new System.Drawing.Size(52, 18);
+            this.LBL_ExecPopup.Size = new System.Drawing.Size(35, 12);
             this.LBL_ExecPopup.TabIndex = 3;
             this.LBL_ExecPopup.Text = "label1";
             this.LBL_ExecPopup.Visible = false;
@@ -104,10 +108,10 @@
             // 
             this.CB_USE_BOXLINK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CB_USE_BOXLINK.AutoSize = true;
-            this.CB_USE_BOXLINK.Location = new System.Drawing.Point(4, 99);
+            this.CB_USE_BOXLINK.Location = new System.Drawing.Point(2, 112);
             this.CB_USE_BOXLINK.Margin = new System.Windows.Forms.Padding(1);
             this.CB_USE_BOXLINK.Name = "CB_USE_BOXLINK";
-            this.CB_USE_BOXLINK.Size = new System.Drawing.Size(242, 22);
+            this.CB_USE_BOXLINK.Size = new System.Drawing.Size(162, 16);
             this.CB_USE_BOXLINK.TabIndex = 4;
             this.CB_USE_BOXLINK.Text = "boxショートカットの作成を使う";
             this.CB_USE_BOXLINK.UseVisualStyleBackColor = true;
@@ -117,10 +121,10 @@
             // 
             this.CB_CLOSE_SIDEBAR_FILE.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CB_CLOSE_SIDEBAR_FILE.AutoSize = true;
-            this.CB_CLOSE_SIDEBAR_FILE.Location = new System.Drawing.Point(4, 65);
+            this.CB_CLOSE_SIDEBAR_FILE.Location = new System.Drawing.Point(2, 89);
             this.CB_CLOSE_SIDEBAR_FILE.Margin = new System.Windows.Forms.Padding(1);
             this.CB_CLOSE_SIDEBAR_FILE.Name = "CB_CLOSE_SIDEBAR_FILE";
-            this.CB_CLOSE_SIDEBAR_FILE.Size = new System.Drawing.Size(254, 22);
+            this.CB_CLOSE_SIDEBAR_FILE.Size = new System.Drawing.Size(171, 16);
             this.CB_CLOSE_SIDEBAR_FILE.TabIndex = 3;
             this.CB_CLOSE_SIDEBAR_FILE.Text = "ファイルサイドバーを自動で隠す";
             this.CB_CLOSE_SIDEBAR_FILE.UseVisualStyleBackColor = true;
@@ -132,10 +136,10 @@
             this.CB_CLOSE_SIDEBAR_FOLDER.AutoSize = true;
             this.CB_CLOSE_SIDEBAR_FOLDER.Checked = true;
             this.CB_CLOSE_SIDEBAR_FOLDER.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CB_CLOSE_SIDEBAR_FOLDER.Location = new System.Drawing.Point(4, 31);
+            this.CB_CLOSE_SIDEBAR_FOLDER.Location = new System.Drawing.Point(2, 67);
             this.CB_CLOSE_SIDEBAR_FOLDER.Margin = new System.Windows.Forms.Padding(1);
             this.CB_CLOSE_SIDEBAR_FOLDER.Name = "CB_CLOSE_SIDEBAR_FOLDER";
-            this.CB_CLOSE_SIDEBAR_FOLDER.Size = new System.Drawing.Size(255, 22);
+            this.CB_CLOSE_SIDEBAR_FOLDER.Size = new System.Drawing.Size(172, 16);
             this.CB_CLOSE_SIDEBAR_FOLDER.TabIndex = 2;
             this.CB_CLOSE_SIDEBAR_FOLDER.Text = "フォルダサイドバーを自動で隠す";
             this.CB_CLOSE_SIDEBAR_FOLDER.UseVisualStyleBackColor = true;
@@ -148,22 +152,24 @@
             this.panel1.Controls.Add(this.CB_CLOSE_SIDEBAR_FOLDER);
             this.panel1.Controls.Add(this.CB_USE_BOXLINK);
             this.panel1.Controls.Add(this.CB_CLOSE_SIDEBAR_FILE);
-            this.panel1.Location = new System.Drawing.Point(378, 284);
+            this.panel1.Location = new System.Drawing.Point(227, 142);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(391, 138);
+            this.panel1.Size = new System.Drawing.Size(235, 139);
             this.panel1.TabIndex = 5;
             // 
             // FormBoxDriveOpener
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(480, 300);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.LBL_ExecPopup);
             this.Controls.Add(this.LBL_PopupColor);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormBoxDriveOpener";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "BoxDrive Supporting";

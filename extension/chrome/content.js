@@ -209,6 +209,14 @@ function setbuttonevent(pelement, pmessage, pid, purl, ppath)
     });
 }
 
+const EL_BASEFILEPAGE = ".page-content.files-page";     //  単独    検索バーの下面Y位置参照のため
+const EL_PAGETITLE = ".page-title";     //  複数    [ファイル] > [フォルダ1] > [フォルダ2]...の文字Y位置参照のため
+const EL_ACTIONBARTITLE = ".action-bar-title";      //  単独    ↓のバーY位置参照のため
+const EL_FORLDERBASE = 'ol.Breadcrumb-list[data-testid="item-list-breadcrumb-list"]';   //  単独（data-testidなしだと複数）    ↓全体
+const EL_FORLDERLIST = "li.Breadcrumb-listItem";    //  複数    [ファイル] > [フォルダ1] > [フォルダ2]...
+const EL_FOLDERTREEBTN = "button.FolderTreeButton";      //  単独
+const EL_FOLDERTREELIST = "a[data-resin-target='openfolder'].menu-item";    //  複数    [ファイル]└[フォルダ1]└[フォルダ2]...
+
 const BTNCC_TEXT = "CC";
 const BTNCC_HINT = "";  //"boxDriveパスをクリップボードにコピー";
 const BTNOPEN_TEXT = ">>>";
@@ -278,7 +286,7 @@ function clickmain(ptarget, callback)
         {
             //  クリップボードにコピー（Openerなし版）
             let path = "";
-            if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/0"') === true)
+            if (document.querySelectorAll(EL_FORLDERLIST)[0].innerHTML.includes('"/folder/0"') === true)
             {
                 //  先頭ファイルから始まっている
                 dbgPutlog(3, "boxfolder", "folder/0");
@@ -286,24 +294,13 @@ function clickmain(ptarget, callback)
             else
             {
                 //  フォルダ階層取得
-                let dotButton = document.querySelectorAll(".ItemListBreadcrumb > button")[0];
+                dotButton = document.querySelectorAll(EL_FOLDERTREEBTN)[0];
                 if (dotButton)
                 {
-                }
-                else
-                {
-                    dotButton = document.querySelectorAll(".ItemListBreadcrumb")[0];
-                    if (dotButton)
-                    {
-                        dotButton = dotButton.querySelectorAll("button")[0];
-                    }
-                }
-                if (dotButton)
-                {
-                    let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
+                    let dotButton2 = document.querySelectorAll(EL_FOLDERTREELIST)[0];
                     if (dotButton2)
                     {
-                        path += [ ...document.querySelectorAll(".bdl-DropdownMenu-element li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
+                        path += [ ...document.querySelectorAll(EL_FOLDERTREELIST), ].filter((v) => ((v.href.endsWith("/folder/0") !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/");
                         if (dotButton.getAttribute("xxclick") === path+"//")
                         {
                             if (path.endsWith("/") === false) path += "/";
@@ -553,17 +550,17 @@ function setbody(psubclass, ptarget)
 
 function reposDummyFolder()
 {
-    let tmpelm = document.querySelector(".action-bar-title").querySelector(".XXBoxDriveDummy");
-    let tmpbaserect = document.querySelector(".page-content.files-page").getBoundingClientRect();
+    let tmpelm = document.querySelector(EL_ACTIONBARTITLE).querySelector(".XXBoxDriveDummy");
+    let tmpbaserect = document.querySelector(EL_BASEFILEPAGE).getBoundingClientRect();
     tmpelm.style.left = (
-        document.querySelector(".action-bar-title").querySelector(".ItemListBreadcrumb-listItem.is-last").getBoundingClientRect().left
+        document.querySelector(EL_ACTIONBARTITLE).querySelector(EL_FORLDERLIST + ".is-last").getBoundingClientRect().left
         - tmpbaserect.left
         ).toString() + "px";
-    let tmprect = document.querySelector(".page-title").getBoundingClientRect();
+    let tmprect = document.querySelector(EL_PAGETITLE).getBoundingClientRect();
     tmpelm.style.top = (
         tmprect.top
         + tmprect.height
-        - (tmprect.top - document.querySelector(".page-title").parentElement.getBoundingClientRect().top)
+        - (tmprect.top - document.querySelector(EL_PAGETITLE).parentElement.getBoundingClientRect().top)
         - tmpbaserect.top
         ).toString() + "px";
 }
@@ -592,7 +589,7 @@ async function boxfolder(pid, ppath, pautoopen)
         {
             await loadBoxOptions();
 
-            parentelm = document.querySelector(".action-bar-title");
+            parentelm = document.querySelector(EL_ACTIONBARTITLE);
             if (parentelm === null)
             {
                 dbgPutlogBoxDrive(3, "boxfolder0c", "skip");
@@ -657,10 +654,10 @@ async function boxfolder(pid, ppath, pautoopen)
         }
         else
         {
-            let tmpelm = document.querySelectorAll('ol[data-testid="item-list-breadcrumb-list"]');
+            let tmpelm = document.querySelectorAll(EL_FORLDERBASE);
             if (tmpelm.length === 1)
             {
-                pathLast += [...tmpelm[0].querySelectorAll(".ItemListBreadcrumb-listItem")].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true) && (v.innerHTML.includes('"foldertree"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/");
+                pathLast += [...tmpelm[0].querySelectorAll(EL_FORLDERLIST)].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true) && (v.innerHTML.includes('"foldertree"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/");
             }
         }
         dbgPutlogBoxDrive(2, "pathLast", pathLast);
@@ -913,7 +910,7 @@ async function boxfolder(pid, ppath, pautoopen)
         }
 
         let path = "";
-        if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].innerHTML.includes('"/folder/0"') === true)
+        if (document.querySelectorAll(EL_FORLDERLIST)[0].innerHTML.includes('"/folder/0"') === true)
         {
             //  先頭ファイルから始まっている
             dbgPutlogBoxDrive(3, "boxfolder", "folder/0");
@@ -921,28 +918,17 @@ async function boxfolder(pid, ppath, pautoopen)
         else
         {
             //  フォルダ階層取得
-            let dotButton = document.querySelectorAll(".ItemListBreadcrumb > button")[0];
-            if (dotButton)
-            {
-            }
-            else
-            {
-                dotButton = document.querySelectorAll(".ItemListBreadcrumb")[0];
-                if (dotButton)
-                {
-                    dotButton = dotButton.querySelectorAll("button")[0];
-                }
-            }
+            let dotButton = document.querySelectorAll(EL_FOLDERTREEBTN)[0];
             if (dotButton)
             {
                 if (dotButton.hasAttribute("xxclick") !== true)
                 {
                     dotButton.setAttribute("xxclick", "///");
                 }
-                let dotButton2 = document.querySelectorAll("a[data-resin-target='openfolder'].menu-item")[0];
+                let dotButton2 = document.querySelectorAll(EL_FOLDERTREELIST)[0];
                 if (dotButton2)
                 {
-                    path += [ ...document.querySelectorAll(".bdl-DropdownMenu-element li[data-target-id='MenuLinkItem-files']"), ].filter((v) => ((v.innerHTML.includes('"/folder/0"') !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/")
+                    path += [ ...document.querySelectorAll(EL_FOLDERTREELIST), ].filter((v) => ((v.href.endsWith("/folder/0") !== true))).map((v) => v.textContent).filter((v) => v !== "").join("/");
                     if (dotButton.getAttribute("xxclick") === path+"//")
                     {
                         if (path.endsWith("/") === false) path += "/";
@@ -997,7 +983,7 @@ async function boxfolder(pid, ppath, pautoopen)
             }
             else
             {
-                if (document.querySelectorAll(".ItemListBreadcrumb-listItem")[0].textContent === "ファイル")
+                if (document.querySelectorAll(EL_FORLDERLIST)[0].textContent === "ファイル")
                 {
                     //  先頭ファイルのみ
                     dbgPutlogBoxDrive(3, "boxfolder", "folder/0");

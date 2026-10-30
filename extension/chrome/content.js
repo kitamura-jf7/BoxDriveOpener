@@ -212,8 +212,8 @@ function setbuttonevent(pelement, pmessage, pid, purl, ppath)
 const EL_BASEFILEPAGE = ".page-content.files-page";     //  単独    検索バーの下面Y位置参照のため
 const EL_PAGETITLE = ".page-title";     //  複数    [ファイル] > [フォルダ1] > [フォルダ2]...の文字Y位置参照のため
 const EL_ACTIONBARTITLE = ".action-bar-title";      //  単独    ↓のバーY位置参照のため
-const EL_FORLDERBASE = 'ol.Breadcrumb-list[data-testid="item-list-breadcrumb-list"]';   //  単独（data-testidなしだと複数）    ↓全体
-const EL_FORLDERLIST = "li.Breadcrumb-listItem";    //  複数    [ファイル] > [フォルダ1] > [フォルダ2]...
+const EL_FORLDERBASE = 'ol.Breadcrumb-list,ol.ItemListBreadcrumb-list[data-testid="item-list-breadcrumb-list"]';   //  単独（data-testidなしだと複数）    ↓全体
+const EL_FORLDERLIST = "li.Breadcrumb-listItem,li.ItemListBreadcrumb-listItem";    //  複数    [ファイル] > [フォルダ1] > [フォルダ2]...
 const EL_FOLDERTREEBTN = "button.FolderTreeButton";      //  単独
 const EL_FOLDERTREELIST = "a[data-resin-target='openfolder'].menu-item";    //  複数    [ファイル]└[フォルダ1]└[フォルダ2]...
 
